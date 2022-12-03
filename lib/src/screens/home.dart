@@ -23,25 +23,27 @@ class _HomeScreenState extends State<HomeScreen> {
               ).createShader(bounds);
             },
             child: const Text('QrHub')),
+        leading: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.settings_outlined),
+          color: Colors.purple,
+        ),
         centerTitle: true,
         elevation: 1,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-
-      // bottomNavigationBar: BottomNavigationBar(items: const [
-      //   BottomNavigationBarItem(
-      //     icon: Icon(Icons.app_blocking),
-      //     label: '',
-      //   ),
-      //   BottomNavigationBarItem(
-      //     icon: Icon(Icons.app_blocking),
-      //     label: '',
-      //   ),
-      // ]),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-        children: const [
-          QrItemCard(),
+        children: [
+          Dismissible(
+            key: const Key('1'),
+            child: const QrItemCard(),
+            onDismissed: (direction) {
+              ScaffoldMessenger.of(context).showSnackBar( superSnackBar(context,
+                message: "aaa",
+              ) ,);
+            },
+          ),
         ],
       ),
       floatingActionButton: Row(
@@ -49,12 +51,12 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           FloatingActionButton(
             onPressed: () {},
-            tooltip: '',
+            tooltip: 'Create Qr Code',
             child: const Icon(Icons.add),
           ),
           FloatingActionButton(
             onPressed: () {},
-            tooltip: '',
+            tooltip: 'Scan Qr Code',
             child: const Icon(Icons.qr_code_scanner_rounded),
           ),
         ],
