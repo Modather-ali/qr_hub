@@ -38,6 +38,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.5
   qr_code_scanner: ^1.0.1
+  syncfusion_flutter_barcodes: ^20.3.59
+  sqflite: ^2.2.1
 
 dev_dependencies:
   flutter_test:

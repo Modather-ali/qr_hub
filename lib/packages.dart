@@ -2,6 +2,8 @@ export 'package:flutter/foundation.dart';
 export 'package:flutter/material.dart';
 export 'package:get/get.dart';
 export 'package:qr_code_scanner/qr_code_scanner.dart';
+export 'package:sqflite/sqflite.dart';
+export 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
 export 'src/components/option_button.dart';
 export 'src/components/qr_item_card.dart';
