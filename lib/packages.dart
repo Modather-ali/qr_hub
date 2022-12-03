@@ -1,5 +1,7 @@
 export 'package:flutter/material.dart';
+export 'package:get/get.dart';
 
+export 'src/components/option_button.dart';
 export 'src/components/qr_item_card.dart';
 export 'src/components/super_snackbar.dart';
 export 'src/screens/create_qr_code.dart';
