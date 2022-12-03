@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:qr_hub/packages.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -53,13 +55,15 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              log(DateUtil().formatted);
+            },
             tooltip: 'Create Qr Code',
             child: const Icon(Icons.add),
           ),
           FloatingActionButton(
             onPressed: () {
-              Get.to(() => const ScanQrCodePage());
+              Get.to(() => const ScannerPage());
             },
             tooltip: 'Scan Qr Code',
             child: const Icon(Icons.qr_code_scanner_rounded),
