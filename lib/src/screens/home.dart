@@ -26,7 +26,26 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         elevation: 1,
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
+      // bottomNavigationBar: BottomNavigationBar(items: const [
+      //   BottomNavigationBarItem(
+      //     icon: Icon(Icons.app_blocking),
+      //     label: '',
+      //   ),
+      //   BottomNavigationBarItem(
+      //     icon: Icon(Icons.app_blocking),
+      //     label: '',
+      //   ),
+      // ]),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        children: const [
+          QrItemCard(),
+        ],
+      ),
       floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           FloatingActionButton(
             onPressed: () {},
