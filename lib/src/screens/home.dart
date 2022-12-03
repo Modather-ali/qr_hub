@@ -39,9 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
             key: const Key('1'),
             child: const QrItemCard(),
             onDismissed: (direction) {
-              ScaffoldMessenger.of(context).showSnackBar( superSnackBar(context,
-                message: "aaa",
-              ) ,);
+              ScaffoldMessenger.of(context).showSnackBar(
+                superSnackBar(
+                  context,
+                  message: "aaa",
+                ),
+              );
             },
           ),
         ],
@@ -55,7 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
             child: const Icon(Icons.add),
           ),
           FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.to(() => const ScanQrCodePage());
+            },
             tooltip: 'Scan Qr Code',
             child: const Icon(Icons.qr_code_scanner_rounded),
           ),
