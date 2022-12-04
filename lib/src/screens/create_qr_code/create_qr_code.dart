@@ -25,7 +25,7 @@ class _CreateQrCodePageState extends State<CreateQrCodePage> {
             titleText: 'Website',
             iconData: Icons.link,
             onTap: () {
-              Get.to(() => WebsiteQRCode());
+              Get.off(() => WebsiteQRCode());
             },
           ),
         ],

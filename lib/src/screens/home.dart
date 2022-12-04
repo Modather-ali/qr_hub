@@ -10,6 +10,31 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final SqlDatabase _sqlDatabase = SqlDatabase();
+  final List<QRModel> _qrModelList = [];
+  _getData() async {
+    List<Map<String, Object?>> data;
+    QRModel qrModel;
+    data = await _sqlDatabase.readData('SELECT * FROM QrCodes');
+    for (var element in data) {
+      qrModel = QRModel(
+        element['id'].toString(),
+        element['url'].toString(),
+        element['date'].toString(),
+        element['urlType'].toString(),
+      );
+      _qrModelList.add(qrModel);
+    }
+    setState(() {});
+    log(_qrModelList.length.toString());
+  }
+
+  @override
+  void initState() {
+    _getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,9 +49,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 radius: 1,
               ).createShader(bounds);
             },
-            child: const Text('QrHub')),
+            child: const Text(
+              'QrHub',
+              style: null,
+            )),
+        titleTextStyle: null,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () async {
+            await _getData();
+          },
           icon: const Icon(Icons.settings_outlined),
           color: Colors.purple,
         ),
@@ -34,12 +65,13 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 1,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: ListView(
+      body: ListView.builder(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-        children: [
-          Dismissible(
-            key: const Key('1'),
-            child: const QrItemCard(),
+        itemCount: _qrModelList.length,
+        itemBuilder: (context, index) {
+          return Dismissible(
+            key: Key(_qrModelList[index].id),
+            child: QrItemCard(qrModel: _qrModelList[index]),
             onDismissed: (direction) {
               ScaffoldMessenger.of(context).showSnackBar(
                 superSnackBar(
@@ -48,21 +80,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
             },
-          ),
-        ],
+          );
+        },
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           FloatingActionButton(
             onPressed: () {
-              log(DateUtil().formatted);
+              log(DateUtil().currantDate);
               Get.to(() => const CreateQrCodePage());
             },
             tooltip: 'Create Qr Code',
             child: const Icon(Icons.add),
           ),
           FloatingActionButton(
+            heroTag: '',
             onPressed: () {
               Get.to(() => const ScannerPage());
             },

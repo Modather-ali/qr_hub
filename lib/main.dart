@@ -13,7 +13,12 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'QrHub',
       theme: ThemeData(
-        appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.black),
+          centerTitle: true,
+          // titleTextStyle: TextStyle(color: Colors.black),
+        ),
         primarySwatch: Colors.purple,
       ),
       home: const HomeScreen(),

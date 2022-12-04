@@ -9,7 +9,7 @@ class DateUtil {
     7: 'Sunday'
   };
 
-  String get formatted {
+  String get currantDate {
     DateTime date = DateTime.now();
     return "${_weekDayFull[date.weekday]}, ${date.day}/${date.month}/${date.year}";
   }

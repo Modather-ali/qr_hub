@@ -11,6 +11,7 @@ export 'src/components/qr_item_card.dart';
 export 'src/components/super_snackbar.dart';
 export 'src/components/super_text_field.dart';
 export 'src/extensions/date_extension.dart';
+export 'src/models/qr_model.dart';
 export 'src/screens/create_qr_code/create_qr_code.dart';
 export 'src/screens/create_qr_code/website_qr_code.dart';
 export 'src/screens/home.dart';

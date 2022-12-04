@@ -40,7 +40,7 @@ class SuperTextField extends StatelessWidget {
           contentPadding: const EdgeInsets.symmetric(horizontal: 10),
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.indigo,
+              color: Colors.purple,
               width: 2.0,
             ),
           ),

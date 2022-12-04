@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:path/path.dart';
 import 'package:qr_hub/packages.dart';
 
 class SqlDatabase {
@@ -14,20 +15,18 @@ class SqlDatabase {
   Future<Database> initial() async {
     String path = await getDatabasesPath();
     String dbName = 'qr_code_database.db';
-    String fullPath = '$path/$dbName';
-    Database database = await openDatabase(fullPath, onCreate: _onCreate);
+    String fullPath = join(path, dbName); //'$path/$dbName';
+    Database database =
+        await openDatabase(fullPath, onCreate: _onCreate, version: 1);
     return database;
   }
 
   FutureOr<void> _onCreate(Database db, int version) async {
-    await db.execute('''
-    CREATE TABLE QrCodes (
-    id INTEGER AUTOINCREMENT NOT NULL PRIMARY KEY,
-    url TEXT NOT NULL,
-    date TEXT NOT NULL,
-    urlType TEXT NOT NULL,
-    ) 
-    ''');
+    await db.execute('''CREATE TABLE "QrCodes"(
+    "id" INTEGER PRIMARY KEY,
+    "url" TEXT,
+    "date" TEXT,
+    "urlType" TEXT)''');
 
     log('database created');
   }
@@ -62,5 +61,13 @@ class SqlDatabase {
     int data = await db!.rawDelete(sql);
     log('delete success $data');
     return data;
+  }
+
+  deleteAll() async {
+    String path = await getDatabasesPath();
+    String dbName = 'qr_code_database.db';
+    String fullPath = '$path/$dbName';
+    await deleteDatabase(fullPath);
+    log('database deleted');
   }
 }
