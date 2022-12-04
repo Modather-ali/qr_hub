@@ -57,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
           FloatingActionButton(
             onPressed: () {
               log(DateUtil().formatted);
+              Get.to(() => const CreateQrCodePage());
             },
             tooltip: 'Create Qr Code',
             child: const Icon(Icons.add),

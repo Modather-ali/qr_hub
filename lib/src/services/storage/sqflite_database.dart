@@ -44,7 +44,7 @@ class SqlDatabase {
     Database? db = await database;
 
     int data = await db!.rawInsert(sql);
-    log('insert success');
+    log('insert success $data');
     return data;
   }
 
@@ -52,7 +52,7 @@ class SqlDatabase {
     Database? db = await database;
 
     int data = await db!.rawUpdate(sql);
-    log('update success');
+    log('update success $data');
     return data;
   }
 
@@ -60,7 +60,7 @@ class SqlDatabase {
     Database? db = await database;
 
     int data = await db!.rawDelete(sql);
-    log('delete success');
+    log('delete success $data');
     return data;
   }
 }
