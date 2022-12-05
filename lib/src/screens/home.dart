@@ -51,7 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
           itemBuilder: (context, index) {
             return Dismissible(
               key: Key(_controller.qrModelsDataList[index].id),
-              child: QrItemCard(qrModel: _controller.qrModelsDataList[index]),
+              child: QrItemCard(
+                  qrModel: _controller.qrModelsDataList[index], index: index),
               onDismissed: (direction) async {
                 await _controller.deleteData(
                     _controller.qrModelsDataList[index].id, index);

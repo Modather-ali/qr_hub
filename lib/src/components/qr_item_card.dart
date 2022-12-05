@@ -2,7 +2,9 @@ import 'package:qr_hub/packages.dart';
 
 class QrItemCard extends StatelessWidget {
   final QRModel qrModel;
-  const QrItemCard({Key? key, required this.qrModel}) : super(key: key);
+  final int index;
+  const QrItemCard({Key? key, required this.qrModel, required this.index})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -12,6 +14,7 @@ class QrItemCard extends StatelessWidget {
             MaterialPageRoute(
                 builder: (context) => ViewQrCodeScreen(
                       qrModel: qrModel,
+                      index: index,
                     )));
       },
       child: Card(

@@ -2,8 +2,13 @@ import 'package:qr_hub/packages.dart';
 
 class ViewQrCodeScreen extends StatelessWidget {
   final QRModel qrModel;
-  const ViewQrCodeScreen({Key? key, required this.qrModel}) : super(key: key);
-
+  final int index;
+  ViewQrCodeScreen({
+    Key? key,
+    required this.qrModel,
+    required this.index,
+  }) : super(key: key);
+  final QRController _controller = Get.put(QRController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,28 +95,41 @@ class ViewQrCodeScreen extends StatelessWidget {
               padding: const EdgeInsets.only(top: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: const [
+                children: [
                   OptionButton(
+                    onTap: () {},
                     option: 'Edit',
                     color: Colors.blue,
                     iconData: Icons.edit,
                   ),
                   OptionButton(
+                    onTap: () async {
+                      await _controller.deleteData(qrModel.id, index);
+
+                      Get.back();
+                      Get.snackbar("You have deleted", qrModel.url,
+                          backgroundColor: Colors.red,
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15));
+                    },
                     option: 'Delete',
                     color: Colors.red,
                     iconData: Icons.delete,
                   ),
-                  OptionButton(
+                  const OptionButton(
+                    // onTap: () {
+                    //   Url
+                    // },
                     option: 'Open',
                     color: Colors.lime,
                     iconData: Icons.open_in_new,
                   ),
-                  OptionButton(
+                  const OptionButton(
                     option: 'Share',
                     color: Colors.green,
                     iconData: Icons.share,
                   ),
-                  OptionButton(
+                  const OptionButton(
                     option: 'Save',
                     color: Colors.cyan,
                     iconData: Icons.download,

@@ -44,7 +44,10 @@ class WebsiteQRCode extends StatelessWidget {
               if (_formKey.currentState!.validate()) {
                 await _controller.insertQRDate(url: url, urlType: urlType);
                 Get.off(() => ViewQrCodeScreen(
-                    qrModel: _controller.qrModelsDataList.last));
+                      qrModel: _controller.qrModelsDataList.last,
+                      index: _controller.qrModelsDataList
+                          .lastIndexOf(_controller.qrModelsDataList.last),
+                    ));
               }
             },
             icon: const Icon(
