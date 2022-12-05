@@ -17,25 +17,20 @@ class QrItemCard extends StatelessWidget {
       child: Card(
         child: Row(
           children: [
-            SizedBox(
-              height: 50,
-              width: 50,
-              child: FittedBox(
-                fit: BoxFit.contain,
-                child: SfBarcodeGenerator(
-                  value: qrModel.url,
-                  symbology: QRCode(),
+            Hero(
+              tag: qrModel.id,
+              child: SizedBox(
+                height: 50,
+                width: 50,
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: SfBarcodeGenerator(
+                    value: qrModel.url,
+                    symbology: QRCode(),
+                  ),
                 ),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(5.0),
-            //   child: Image.asset(
-            //     'assets/images/qr_code.jpg',
-            //     height: 50,
-            //   ),
-            // ),
-
             Expanded(
               child: Container(
                 width: Get.width,

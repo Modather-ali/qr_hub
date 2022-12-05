@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:qr_hub/packages.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -73,8 +71,18 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           FloatingActionButton(
             onPressed: () {
-              log(DateUtil().currantDate);
-              Get.to(() => const CreateQrCodePage());
+              Navigator.push(
+                context,
+                CircularClipRoute<void>(
+                  builder: (context) => const CreateQrCodePage(),
+                  expandFrom: context,
+                  curve: Curves.fastOutSlowIn,
+                  reverseCurve: Curves.fastOutSlowIn.flipped,
+                  opacity: ConstantTween(1),
+                  transitionDuration: const Duration(seconds: 1),
+                ),
+              );
+              // Get.to(() => const CreateQrCodePage());
             },
             tooltip: 'Create Qr Code',
             child: const Icon(Icons.add),

@@ -11,11 +11,6 @@ class ViewQrCodeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.deepPurpleAccent,
         iconTheme: const IconThemeData(color: Colors.white),
-        // leading: IconButton(
-        //     onPressed: () {
-        //       Get.offAll(() => const HomeScreen());
-        //     },
-        //     icon: const Icon(Icons.arrow_back)),
         elevation: 0,
       ),
       body: Column(
@@ -54,14 +49,17 @@ class ViewQrCodeScreen extends StatelessWidget {
                         width: 260,
                         color: Colors.white,
                       ),
-                      SizedBox(
-                        height: 220,
-                        width: 220,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: SfBarcodeGenerator(
-                            value: qrModel.url,
-                            symbology: QRCode(),
+                      Hero(
+                        tag: qrModel.id,
+                        child: SizedBox(
+                          height: 220,
+                          width: 220,
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: SfBarcodeGenerator(
+                              value: qrModel.url,
+                              symbology: QRCode(),
+                            ),
                           ),
                         ),
                       ),
@@ -73,14 +71,12 @@ class ViewQrCodeScreen extends StatelessWidget {
                   SizedBox(
                     height: 100,
                     width: 250,
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          qrModel.url,
-                          style: const TextStyle(fontSize: 20),
-                        ),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: AutoSizeText(
+                        qrModel.url,
+                        maxLines: 2,
+                        style: const TextStyle(fontSize: 20),
                       ),
                     ),
                   ),
@@ -127,5 +123,9 @@ class ViewQrCodeScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _shareUrl() {
+    Share.share(qrModel.url);
   }
 }

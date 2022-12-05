@@ -31,8 +31,10 @@ class QRController extends GetxController {
     await _sqlDatabase.insertData(
         "INSERT INTO 'QrCodes' ('url', 'date', 'urlType') VALUES('$url', '${_dateUtil.currantDate}', '$urlType')");
 
-    int id = int.parse(qrModelsDataList.last.id) + 1;
-
+    int id = 1;
+    if (qrModelsDataList.isNotEmpty) {
+      id = int.parse(qrModelsDataList.last.id) + 1;
+    }
     QRModel qrModel =
         QRModel(id.toString(), url, _dateUtil.currantDate, urlType);
     qrModelsDataList.add(qrModel);

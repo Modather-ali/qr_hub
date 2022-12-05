@@ -40,6 +40,11 @@ dependencies:
   qr_code_scanner: ^1.0.1
   syncfusion_flutter_barcodes: ^20.3.59
   sqflite: ^2.2.1
+  auto_size_text: ^3.0.0
+  circular_clip_route: ^0.2.0+3
+  screenshot: ^1.2.3
+  share_plus: ^6.3.0
+  url_launcher: ^6.1.7
 
 dev_dependencies:
   flutter_test:
