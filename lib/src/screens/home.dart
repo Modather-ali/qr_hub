@@ -10,28 +10,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final SqlDatabase _sqlDatabase = SqlDatabase();
-  final List<QRModel> _qrModelList = [];
-  _getData() async {
-    List<Map<String, Object?>> data;
-    QRModel qrModel;
-    data = await _sqlDatabase.readData('SELECT * FROM QrCodes');
-    for (var element in data) {
-      qrModel = QRModel(
-        element['id'].toString(),
-        element['url'].toString(),
-        element['date'].toString(),
-        element['urlType'].toString(),
-      );
-      _qrModelList.add(qrModel);
-    }
-    setState(() {});
-    log(_qrModelList.length.toString());
-  }
+  final QRController _controller = Get.put(QRController());
 
   @override
   void initState() {
-    _getData();
+    _controller.readData();
     super.initState();
   }
 
@@ -55,9 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )),
         titleTextStyle: null,
         leading: IconButton(
-          onPressed: () async {
-            await _getData();
-          },
+          onPressed: () async {},
           icon: const Icon(Icons.settings_outlined),
           color: Colors.purple,
         ),
@@ -65,24 +46,28 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 1,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: ListView.builder(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-        itemCount: _qrModelList.length,
-        itemBuilder: (context, index) {
-          return Dismissible(
-            key: Key(_qrModelList[index].id),
-            child: QrItemCard(qrModel: _qrModelList[index]),
-            onDismissed: (direction) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                superSnackBar(
-                  context,
-                  message: "aaa",
-                ),
-              );
-            },
-          );
-        },
-      ),
+      body: GetBuilder<QRController>(builder: (_) {
+        return ListView.builder(
+          padding: const EdgeInsets.fromLTRB(10, 20, 10, 100),
+          itemCount: _controller.qrModelsDataList.length,
+          itemBuilder: (context, index) {
+            return Dismissible(
+              key: Key(_controller.qrModelsDataList[index].id),
+              child: QrItemCard(qrModel: _controller.qrModelsDataList[index]),
+              onDismissed: (direction) async {
+                await _controller.deleteData(
+                    _controller.qrModelsDataList[index].id, index);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  superSnackBar(
+                    context,
+                    message: "aaa",
+                  ),
+                );
+              },
+            );
+          },
+        );
+      }),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

@@ -26,13 +26,27 @@ class WebsiteQRCode extends StatelessWidget {
     }
   }
 
+  final QRController _controller = Get.put(QRController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: _saveQRCode,
+            onPressed: () async {
+              String url = _textEditingController.text;
+              String urlType = 'website';
+              if (!url.startsWith('http')) {
+                url = 'https://$url';
+                log(url);
+              }
+              if (_formKey.currentState!.validate()) {
+                await _controller.insertQRDate(url: url, urlType: urlType);
+                Get.off(() => ViewQrCodeScreen(
+                    qrModel: _controller.qrModelsDataList.last));
+              }
+            },
             icon: const Icon(
               Icons.done,
               color: Colors.green,
