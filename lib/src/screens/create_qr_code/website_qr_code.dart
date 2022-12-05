@@ -22,7 +22,7 @@ class WebsiteQRCode extends StatelessWidget {
     if (_formKey.currentState!.validate()) {
       await _sqlDatabase.insertData(
           "INSERT INTO 'QrCodes' ('url', 'date', 'urlType') VALUES('$url', '${_dateUtil.currantDate}', '$urlType')");
-      Get.off(() => const ViewQrCodeScreen());
+      // Get.off(() => const ViewQrCodeScreen());
     }
   }
 

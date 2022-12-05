@@ -1,19 +1,21 @@
 import 'package:qr_hub/packages.dart';
 
-class ViewQrCodeScreen extends StatefulWidget {
-  const ViewQrCodeScreen({Key? key}) : super(key: key);
+class ViewQrCodeScreen extends StatelessWidget {
+  final QRModel qrModel;
+  const ViewQrCodeScreen({Key? key, required this.qrModel}) : super(key: key);
 
-  @override
-  _ViewQrCodeScreenState createState() => _ViewQrCodeScreenState();
-}
-
-class _ViewQrCodeScreenState extends State<ViewQrCodeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.deepPurpleAccent,
       appBar: AppBar(
         backgroundColor: Colors.deepPurpleAccent,
+        iconTheme: const IconThemeData(color: Colors.white),
+        // leading: IconButton(
+        //     onPressed: () {
+        //       Get.offAll(() => const HomeScreen());
+        //     },
+        //     icon: const Icon(Icons.arrow_back)),
         elevation: 0,
       ),
       body: Column(
@@ -52,19 +54,35 @@ class _ViewQrCodeScreenState extends State<ViewQrCodeScreen> {
                         width: 260,
                         color: Colors.white,
                       ),
-                      Image.asset(
-                        'assets/images/qr_code.jpg',
-                        height: 245,
-                        width: 245,
-                      )
+                      SizedBox(
+                        height: 220,
+                        width: 220,
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: SfBarcodeGenerator(
+                            value: qrModel.url,
+                            symbology: QRCode(),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(
                     height: 30,
                   ),
-                  const Text(
-                    'https//flutter.dev',
-                    style: TextStyle(fontSize: 20),
+                  SizedBox(
+                    height: 100,
+                    width: 250,
+                    child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          qrModel.url,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -86,6 +104,11 @@ class _ViewQrCodeScreenState extends State<ViewQrCodeScreen> {
                     option: 'Delete',
                     color: Colors.red,
                     iconData: Icons.delete,
+                  ),
+                  OptionButton(
+                    option: 'Open',
+                    color: Colors.lime,
+                    iconData: Icons.open_in_new,
                   ),
                   OptionButton(
                     option: 'Share',

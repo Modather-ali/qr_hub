@@ -49,7 +49,7 @@ class _ScannerPageState extends State<ScannerPage> {
         result = scanData;
       });
       if (result != null) {
-        Get.off(() => const ViewQrCodeScreen());
+        // Get.off(() => const ViewQrCodeScreen());
       }
     });
   }
