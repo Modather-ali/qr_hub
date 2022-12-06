@@ -26,8 +26,10 @@ class ViewQrCodeScreen extends StatelessWidget {
         children: [
           Expanded(
             child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
+              alignment: Alignment.center,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(
@@ -38,6 +40,9 @@ class ViewQrCodeScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
                   Stack(
                     alignment: Alignment.center,
                     children: [
@@ -78,19 +83,23 @@ class ViewQrCodeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  SizedBox(
-                    height: 100,
-                    width: 250,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: AutoSizeText(
-                        qrModel.url,
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: SizedBox(
+                      height: 100,
+                      width: 250,
+                      child: InkWell(
+                        onTap: _openUrl,
+                        child: AutoSizeText(
+                          qrModel.url,
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
+                          locale: const Locale('en'),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -150,6 +159,15 @@ class ViewQrCodeScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _editQRCode() {
+    switch (qrModel.urlType) {
+      case 'website':
+        Get.to(() => WebsiteQRCode());
+        break;
+      default:
+    }
   }
 
   _shareUrl() async {

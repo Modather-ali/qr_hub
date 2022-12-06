@@ -49,21 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.fromLTRB(10, 20, 10, 100),
           itemCount: _controller.qrModelsDataList.length,
           itemBuilder: (context, index) {
-            return Dismissible(
-              key: Key(_controller.qrModelsDataList[index].id),
-              child: QrItemCard(
-                  qrModel: _controller.qrModelsDataList[index], index: index),
-              onDismissed: (direction) async {
-                await _controller.deleteData(
-                    _controller.qrModelsDataList[index].id, index);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  superSnackBar(
-                    context,
-                    message: "aaa",
-                  ),
-                );
-              },
-            );
+            return QrItemCard(
+                qrModel: _controller.qrModelsDataList[index], index: index);
           },
         );
       }),

@@ -11,20 +11,6 @@ class WebsiteQRCode extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final SqlDatabase _sqlDatabase = SqlDatabase();
   final DateUtil _dateUtil = DateUtil();
-  _saveQRCode() async {
-    String url = _textEditingController.text;
-    String urlType = 'website';
-    if (!url.startsWith('http')) {
-      url = 'https://$url';
-      log(url);
-    }
-
-    if (_formKey.currentState!.validate()) {
-      await _sqlDatabase.insertData(
-          "INSERT INTO 'QrCodes' ('url', 'date', 'urlType') VALUES('$url', '${_dateUtil.currantDate}', '$urlType')");
-      // Get.off(() => const ViewQrCodeScreen());
-    }
-  }
 
   final QRController _controller = Get.put(QRController());
 
