@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:qr_hub/packages.dart';
 
 class ViewQrCodeScreen extends StatelessWidget {
@@ -9,6 +12,7 @@ class ViewQrCodeScreen extends StatelessWidget {
     required this.index,
   }) : super(key: key);
   final QRController _controller = Get.put(QRController());
+  final ScreenshotController _screenshotController = ScreenshotController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,14 +60,18 @@ class ViewQrCodeScreen extends StatelessWidget {
                       ),
                       Hero(
                         tag: qrModel.id,
-                        child: SizedBox(
-                          height: 220,
-                          width: 220,
-                          child: FittedBox(
-                            fit: BoxFit.contain,
-                            child: SfBarcodeGenerator(
-                              value: qrModel.url,
-                              symbology: QRCode(),
+                        child: Screenshot(
+                          controller: _screenshotController,
+                          child: Container(
+                            color: Colors.white,
+                            height: 220,
+                            width: 220,
+                            child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: SfBarcodeGenerator(
+                                value: qrModel.url,
+                                symbology: QRCode(),
+                              ),
                             ),
                           ),
                         ),
@@ -81,6 +89,7 @@ class ViewQrCodeScreen extends StatelessWidget {
                       child: AutoSizeText(
                         qrModel.url,
                         maxLines: 2,
+                        textAlign: TextAlign.center,
                         style: const TextStyle(fontSize: 20),
                       ),
                     ),
@@ -116,20 +125,20 @@ class ViewQrCodeScreen extends StatelessWidget {
                     color: Colors.red,
                     iconData: Icons.delete,
                   ),
-                  const OptionButton(
-                    // onTap: () {
-                    //   Url
-                    // },
+                  OptionButton(
+                    onTap: _openUrl,
                     option: 'Open',
                     color: Colors.lime,
                     iconData: Icons.open_in_new,
                   ),
-                  const OptionButton(
+                  OptionButton(
+                    onTap: _shareUrl,
                     option: 'Share',
                     color: Colors.green,
                     iconData: Icons.share,
                   ),
-                  const OptionButton(
+                  OptionButton(
+                    onTap: _saveQRCodeAsImage,
                     option: 'Save',
                     color: Colors.cyan,
                     iconData: Icons.download,
@@ -143,7 +152,52 @@ class ViewQrCodeScreen extends StatelessWidget {
     );
   }
 
-  _shareUrl() {
-    Share.share(qrModel.url);
+  _shareUrl() async {
+    try {
+      await _screenshotController
+          .capture(delay: const Duration(milliseconds: 1000))
+          .then((image) async {
+        final directory = await getApplicationDocumentsDirectory();
+        final imagePath = await File('${directory.path}/image.png').create();
+        await imagePath.writeAsBytes(image!);
+
+        await Share.shareFiles([imagePath.path], text: qrModel.url);
+      });
+    } catch (e) {
+      log("error in share $e");
+    }
+  }
+
+  _openUrl() async {
+    try {
+      Uri url = Uri.parse(qrModel.url);
+      if (await canLaunchUrl(url)) {
+        await launchUrl(
+          url,
+          mode: LaunchMode.externalApplication,
+        );
+      }
+    } catch (e) {
+      log("error in open $e");
+    }
+  }
+
+  _saveQRCodeAsImage() async {
+    try {
+      PermissionStatus permissionStatus = await Permission.storage.request();
+      if (permissionStatus.isGranted) {
+        // String newPath = "storage/emulated/0/QrHub";
+        String fileName =
+            '${qrModel.urlType}_${qrModel.url.split('/').last}.png';
+
+        _screenshotController.capture().then((image) async {
+          await ImageGallerySaver.saveImage(image!,
+              name: fileName, quality: 100);
+        });
+        log("save success $fileName");
+      }
+    } catch (e) {
+      log("error in save $e");
+    }
   }
 }
