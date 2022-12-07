@@ -23,7 +23,7 @@ export 'src/controller/qr_controller.dart';
 export 'src/extensions/date_extension.dart';
 export 'src/models/qr_model.dart';
 export 'src/screens/create_qr_code/create_qr_code.dart';
-export 'src/screens/create_qr_code/website_qr_code.dart';
+export 'src/screens/create_qr_code/select_qr_code_type.dart';
 export 'src/screens/home.dart';
 export 'src/screens/scanner.dart';
 export 'src/screens/view_qr_code.dart';

@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.push(
                 context,
                 CircularClipRoute<void>(
-                  builder: (context) => const CreateQrCodePage(),
+                  builder: (context) => const SelectQrCodeType(),
                   expandFrom: context,
                   curve: Curves.fastOutSlowIn,
                   reverseCurve: Curves.fastOutSlowIn.flipped,

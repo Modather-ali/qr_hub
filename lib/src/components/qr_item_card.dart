@@ -34,7 +34,9 @@ class QrItemCard extends StatelessWidget {
             ),
           ),
           title: Text(
-            qrModel.url,
+            qrModel.urlType != 'Website'
+                ? qrModel.url.split(':')[1]
+                : qrModel.url,
             maxLines: 1,
             style: const TextStyle(
               fontSize: 16,

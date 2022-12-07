@@ -91,7 +91,9 @@ class ViewQrCodeScreen extends StatelessWidget {
                       child: InkWell(
                         onTap: _openUrl,
                         child: AutoSizeText(
-                          qrModel.url.split(':')[1],
+                          qrModel.urlType != 'Website'
+                              ? qrModel.url.split(':')[1]
+                              : qrModel.url,
                           maxLines: 2,
                           textAlign: TextAlign.center,
                           locale: const Locale('en'),
@@ -115,7 +117,13 @@ class ViewQrCodeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   OptionButton(
-                    onTap: () {},
+                    onTap: () {
+                      Get.off(() => CreateQRCodePage(
+                            index: index,
+                            qrModel: qrModel,
+                            urlType: qrModel.urlType,
+                          ));
+                    },
                     option: 'Edit',
                     color: Colors.blue,
                     iconData: Icons.edit,
@@ -165,7 +173,7 @@ class ViewQrCodeScreen extends StatelessWidget {
   _editQRCode() {
     switch (qrModel.urlType) {
       case 'website':
-        Get.to(() => const WebsiteQRCode());
+        Get.to(() => const CreateQRCodePage());
         break;
       default:
     }

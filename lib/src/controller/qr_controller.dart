@@ -41,6 +41,25 @@ class QRController extends GetxController {
     update();
   }
 
+  Future updateQRDate({
+    required String url,
+    required String urlType,
+    required String id,
+    required int index,
+  }) async {
+    await _sqlDatabase.updateData('''
+        UPDATE QrCodes SET 
+        url = "$url", 
+        date = "${_dateUtil.currantDate}" 
+        WHERE id = $id
+        ''');
+    QRModel qrModel = QRModel(id, url, _dateUtil.currantDate, urlType);
+    // qrModelsDataList.replaceRange(index, index, [qrModel]);
+    qrModelsDataList.removeAt(index);
+    qrModelsDataList.insert(index, qrModel);
+    update();
+  }
+
   Future deleteData(String id, int index) async {
     int qrID =
         await _sqlDatabase.deleteData('DELETE FROM QrCodes WHERE id = $id');
