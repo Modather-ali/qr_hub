@@ -13,6 +13,7 @@ class SuperTextField extends StatelessWidget {
     this.suffixIcon,
     this.obscureText = false,
     this.controller,
+    this.focusNode,
   }) : super(key: key);
 
   final String fieldName;
@@ -24,6 +25,7 @@ class SuperTextField extends StatelessWidget {
   Widget? suffixIcon;
   bool obscureText;
   TextEditingController? controller;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class SuperTextField extends StatelessWidget {
         scrollPadding: const EdgeInsets.all(50),
         keyboardType: textInputType,
         textInputAction: textInputAction,
+        focusNode: focusNode,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(horizontal: 10),
           focusedBorder: const OutlineInputBorder(
@@ -45,7 +48,7 @@ class SuperTextField extends StatelessWidget {
             ),
           ),
           border: const OutlineInputBorder(borderSide: BorderSide(width: 2.0)),
-          label: Text(fieldName),
+          hintText: fieldName,
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
         ),

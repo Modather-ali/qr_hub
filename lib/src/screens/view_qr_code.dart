@@ -91,7 +91,7 @@ class ViewQrCodeScreen extends StatelessWidget {
                       child: InkWell(
                         onTap: _openUrl,
                         child: AutoSizeText(
-                          qrModel.url,
+                          qrModel.url.split(':')[1],
                           maxLines: 2,
                           textAlign: TextAlign.center,
                           locale: const Locale('en'),
@@ -165,7 +165,7 @@ class ViewQrCodeScreen extends StatelessWidget {
   _editQRCode() {
     switch (qrModel.urlType) {
       case 'website':
-        Get.to(() => WebsiteQRCode());
+        Get.to(() => const WebsiteQRCode());
         break;
       default:
     }

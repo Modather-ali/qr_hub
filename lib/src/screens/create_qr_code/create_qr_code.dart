@@ -8,6 +8,24 @@ class CreateQrCodePage extends StatefulWidget {
 }
 
 class _CreateQrCodePageState extends State<CreateQrCodePage> {
+  final List<Map> _qrType = [
+    {
+      'type': 'Website',
+      'icon': Icons.link,
+    },
+    {
+      'type': 'Mobile Number',
+      'icon': Icons.phone,
+    },
+    {
+      'type': 'Email',
+      'icon': Icons.email,
+    },
+    // {
+    //   'type':'',
+    //   'icon':''
+    // }
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,15 +38,18 @@ class _CreateQrCodePageState extends State<CreateQrCodePage> {
         elevation: 1,
       ),
       body: Column(
-        children: [
-          NiceListTile(
-            titleText: 'Website',
-            iconData: Icons.link,
+        children: List.generate(
+          _qrType.length,
+          (index) => NiceListTile(
+            titleText: _qrType[index]['type'],
+            iconData: _qrType[index]['icon'],
             onTap: () {
-              Get.off(() => WebsiteQRCode());
+              Get.off(() => WebsiteQRCode(
+                    urlType: _qrType[index]['type'],
+                  ));
             },
           ),
-        ],
+        ),
       ),
     );
   }

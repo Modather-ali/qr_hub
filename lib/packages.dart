@@ -2,7 +2,7 @@ export 'package:auto_size_text/auto_size_text.dart';
 export 'package:circular_clip_route/circular_clip_route.dart';
 export 'package:flutter/foundation.dart';
 export 'package:flutter/material.dart';
-// export 'package:flutter_dismissible_tile/flutter_dismissible_tile.dart';
+export 'package:flutter/services.dart';
 export 'package:get/get.dart';
 export 'package:image_gallery_saver/image_gallery_saver.dart';
 export 'package:path_provider/path_provider.dart';
