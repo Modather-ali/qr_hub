@@ -48,9 +48,35 @@ class _HomeScreenState extends State<HomeScreen> {
         return ListView.builder(
           padding: const EdgeInsets.fromLTRB(10, 20, 10, 100),
           itemCount: _controller.qrModelsDataList.length,
+          physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) {
-            return QrItemCard(
-                qrModel: _controller.qrModelsDataList[index], index: index);
+            return Dismissible(
+              key: Key(_controller.qrModelsDataList[index].id),
+              background: Container(
+                color: Colors.red.withOpacity(0.7),
+                alignment: Alignment.center,
+                child: const Icon(
+                  Icons.delete_forever,
+                  color: Colors.white,
+                ),
+              ),
+              confirmDismiss: (direction) => Future.delayed(
+                const Duration(seconds: 1),
+                () => true,
+              ),
+              child: QrItemCard(
+                  qrModel: _controller.qrModelsDataList[index], index: index),
+              onDismissed: (direction) async {
+                await _controller.deleteData(
+                    _controller.qrModelsDataList[index].id, index);
+                Get.snackbar(
+                    "You have deleted", _controller.qrModelsDataList[index].url,
+                    backgroundColor: Colors.red,
+                    colorText: Colors.white,
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 15));
+              },
+            );
           },
         );
       }),
