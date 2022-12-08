@@ -54,7 +54,6 @@ class QRController extends GetxController {
         WHERE id = $id
         ''');
     QRModel qrModel = QRModel(id, url, _dateUtil.currantDate, urlType);
-    // qrModelsDataList.replaceRange(index, index, [qrModel]);
     qrModelsDataList.removeAt(index);
     qrModelsDataList.insert(index, qrModel);
     update();
