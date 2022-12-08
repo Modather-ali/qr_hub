@@ -1,3 +1,3 @@
 import '../../packages.dart';
 
-ThemeData l;
+ThemeData lightTheme = ThemeData();

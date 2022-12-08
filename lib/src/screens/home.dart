@@ -38,11 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
               style: null,
             )),
         titleTextStyle: null,
-        // leading: IconButton(
-        //   onPressed: () async {},
-        //   icon: const Icon(Icons.menu),
-        //   color: Colors.purple,
-        // ),
         centerTitle: true,
         elevation: 1,
       ),
