@@ -20,6 +20,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: Colors.purple,
+        ),
         title: ShaderMask(
             shaderCallback: (bounds) {
               return const RadialGradient(
@@ -35,14 +38,15 @@ class _HomeScreenState extends State<HomeScreen> {
               style: null,
             )),
         titleTextStyle: null,
-        leading: IconButton(
-          onPressed: () async {},
-          icon: const Icon(Icons.settings_outlined),
-          color: Colors.purple,
-        ),
+        // leading: IconButton(
+        //   onPressed: () async {},
+        //   icon: const Icon(Icons.menu),
+        //   color: Colors.purple,
+        // ),
         centerTitle: true,
         elevation: 1,
       ),
+      drawer: const SideDrawer(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: GetBuilder<QRController>(builder: (_) {
         return ListView.builder(

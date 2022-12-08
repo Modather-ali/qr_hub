@@ -17,6 +17,7 @@ export 'package:url_launcher/url_launcher.dart';
 export 'src/components/nice_list_tile.dart';
 export 'src/components/option_button.dart';
 export 'src/components/qr_item_card.dart';
+export 'src/components/side_drawer.dart';
 export 'src/components/super_snackbar.dart';
 export 'src/components/super_text_field.dart';
 export 'src/controller/qr_controller.dart';

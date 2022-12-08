@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../packages.dart';
 
 class ScannerPage extends StatefulWidget {
@@ -11,7 +13,7 @@ class _ScannerPageState extends State<ScannerPage> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
   QRViewController? controller;
-
+  final QRController _controller = Get.put(QRController());
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
   // @override
@@ -23,6 +25,35 @@ class _ScannerPageState extends State<ScannerPage> {
   //     controller!.resumeCamera();
   //   }
   // }
+
+  void _onQRViewCreated(QRViewController controller) {
+    this.controller = controller;
+    int counter = 0;
+    controller.scannedDataStream.listen((scanData) async {
+      result = scanData;
+      counter = 1;
+      log(result!.code!);
+      if (result != null && counter == 1) {
+        await _insertNewQR(result!.code!);
+        counter = 0;
+      }
+    });
+  }
+
+  Future _insertNewQR(String url) async {
+    await _controller.insertQRDate(url: url, urlType: 'Website');
+    Get.off(() => ViewQrCodeScreen(
+          qrModel: _controller.qrModelsDataList.last,
+          index: _controller.qrModelsDataList.length - 1,
+          // .lastIndexOf(_controller.qrModelsDataList.last),
+        ));
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,24 +70,5 @@ class _ScannerPageState extends State<ScannerPage> {
         ],
       ),
     );
-  }
-
-  void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-      });
-      if (result != null) {
-        // Get.off(() => const ViewQrCodeScreen());
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
   }
 }
