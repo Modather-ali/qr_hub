@@ -9,10 +9,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final QRController _controller = Get.put(QRController());
+  bool _isLoading = false;
+  _getDate() async {
+    setState(() {
+      _isLoading = true;
+    });
+    await _controller.readData();
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   void initState() {
-    _controller.readData();
+    _getDate();
     super.initState();
   }
 
@@ -41,42 +51,46 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         elevation: 1,
       ),
-      drawer: const SideDrawer(),
+      drawer: SideDrawer(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: GetBuilder<QRController>(builder: (_) {
-        return ListView.builder(
-          padding: const EdgeInsets.fromLTRB(10, 20, 10, 100),
-          itemCount: _controller.qrModelsDataList.length,
-          physics: const BouncingScrollPhysics(),
-          itemBuilder: (context, index) {
-            return Dismissible(
-              key: Key(_controller.qrModelsDataList[index].id),
-              background: Container(
-                color: Colors.red.withOpacity(0.7),
-                alignment: Alignment.center,
-                child: const Icon(
-                  Icons.delete_forever,
-                  color: Colors.white,
+        return Visibility(
+          visible: !_isLoading,
+          replacement: const Center(child: CircularProgressIndicator()),
+          child: ListView.builder(
+            padding: const EdgeInsets.fromLTRB(10, 20, 10, 100),
+            itemCount: _controller.qrModelsDataList.length,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              return Dismissible(
+                key: Key(_controller.qrModelsDataList[index].id),
+                background: Container(
+                  color: Colors.red.withOpacity(0.7),
+                  alignment: Alignment.center,
+                  child: const Icon(
+                    Icons.delete_forever,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              confirmDismiss: (direction) => Future.delayed(
-                const Duration(seconds: 1),
-                () => true,
-              ),
-              child: QrItemCard(
-                  qrModel: _controller.qrModelsDataList[index], index: index),
-              onDismissed: (direction) async {
-                await _controller.deleteData(
-                    _controller.qrModelsDataList[index].id, index);
-                Get.snackbar(
-                    "You have deleted", _controller.qrModelsDataList[index].url,
-                    backgroundColor: Colors.red,
-                    colorText: Colors.white,
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 15));
-              },
-            );
-          },
+                confirmDismiss: (direction) => Future.delayed(
+                  const Duration(seconds: 1),
+                  () => true,
+                ),
+                child: QrItemCard(
+                    qrModel: _controller.qrModelsDataList[index], index: index),
+                onDismissed: (direction) async {
+                  await _controller.deleteData(
+                      _controller.qrModelsDataList[index].id, index);
+                  Get.snackbar("You have deleted",
+                      _controller.qrModelsDataList[index].url,
+                      backgroundColor: Colors.red,
+                      colorText: Colors.white,
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 15));
+                },
+              );
+            },
+          ),
         );
       }),
       floatingActionButton: Row(
@@ -84,17 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           FloatingActionButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                CircularClipRoute<void>(
-                  builder: (context) => const SelectQrCodeType(),
-                  expandFrom: context,
-                  curve: Curves.fastOutSlowIn,
-                  reverseCurve: Curves.fastOutSlowIn.flipped,
-                  opacity: ConstantTween(1),
-                  transitionDuration: const Duration(seconds: 1),
-                ),
-              );
+              Get.to(() => const SelectQrCodeType());
               // Get.to(() => const CreateQrCodePage());
             },
             tooltip: 'Create Qr Code',

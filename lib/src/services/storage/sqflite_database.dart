@@ -28,6 +28,10 @@ class SqlDatabase {
     "date" TEXT,
     "urlType" TEXT)''');
 
+    await db.execute('''CREATE TABLE "AppData"(
+    "theme_mode" TEXT,
+    "local" TEXT)''');
+
     log('database created');
   }
 

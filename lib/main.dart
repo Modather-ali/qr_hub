@@ -6,24 +6,36 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final ThemeController _themeController = Get.put(ThemeController());
+  @override
+  void initState() {
+    _themeController.readData();
+    super.initState();
+  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'QrHub',
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-          iconTheme: IconThemeData(color: Colors.black),
-          centerTitle: true,
-          // titleTextStyle: TextStyle(color: Colors.black),
-        ),
-        primarySwatch: Colors.purple,
-      ),
-      home: const HomeScreen(),
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: _themeController.themeMode == 'dark'
+          ? ThemeMode.dark
+          : ThemeMode.light,
+      home: GetBuilder<ThemeController>(
+          init: ThemeController(),
+          builder: (_) {
+            return const HomeScreen();
+          }),
     );
   }
 }
