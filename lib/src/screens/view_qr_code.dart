@@ -126,7 +126,7 @@ class ViewQrCodeScreen extends StatelessWidget {
                               urlType: qrModel.urlType,
                             ));
                       },
-                      option: 'Edit',
+                      option: 'Edit'.tr,
                       color: Colors.blue,
                       iconData: Icons.edit,
                     ),
@@ -135,31 +135,31 @@ class ViewQrCodeScreen extends StatelessWidget {
                         await _controller.deleteData(qrModel.id, index);
 
                         Get.back();
-                        Get.snackbar("You have deleted", qrModel.url,
+                        Get.snackbar("You have deleted".tr, qrModel.url,
                             backgroundColor: Colors.red,
                             colorText: Colors.white,
                             margin: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 15));
                       },
-                      option: 'Delete',
+                      option: 'Delete'.tr,
                       color: Colors.red,
                       iconData: Icons.delete,
                     ),
                     OptionButton(
                       onTap: _openUrl,
-                      option: 'Open',
+                      option: 'Open'.tr,
                       color: Colors.lime,
                       iconData: Icons.open_in_new,
                     ),
                     OptionButton(
                       onTap: _shareUrl,
-                      option: 'Share',
+                      option: 'Share'.tr,
                       color: Colors.green,
                       iconData: Icons.share,
                     ),
                     OptionButton(
                       onTap: _saveQRCodeAsImage,
-                      option: 'Save',
+                      option: 'Save'.tr,
                       color: Colors.cyan,
                       iconData: Icons.download,
                     ),

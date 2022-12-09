@@ -35,7 +35,7 @@ class SideDrawer extends StatelessWidget {
             onTap: () async {
               await Share.share(_appStoreLink);
             },
-            titleText: 'Share the app',
+            titleText: 'Share the app'.tr,
             iconData: Icons.share,
             showTrailing: false,
           ),
@@ -43,7 +43,7 @@ class SideDrawer extends StatelessWidget {
             onTap: () async {
               _lunchUrl(_appStoreLink);
             },
-            titleText: 'Rate us',
+            titleText: 'Rate us'.tr,
             iconData: Icons.star_rate,
             showTrailing: false,
           ),
@@ -51,12 +51,20 @@ class SideDrawer extends StatelessWidget {
             onTap: () async {
               _lunchUrl(_githubLink);
             },
-            titleText: 'Source Code',
+            titleText: 'Source Code'.tr,
             iconData: Icons.code,
             showTrailing: false,
           ),
-          const NiceListTile(
-            titleText: 'عربي',
+          NiceListTile(
+            onTap: () async {
+              String langCode = 'en';
+              if (_themeController.local == 'en') {
+                langCode = 'ar';
+              }
+
+              await _themeController.changeLang(langCode);
+            },
+            titleText: 'locale'.tr,
             iconData: Icons.translate,
             showTrailing: false,
           ),
@@ -66,7 +74,7 @@ class SideDrawer extends StatelessWidget {
             child: DayNightSwitcher(
               isDarkModeEnabled: _themeController.isDark,
               onStateChanged: (isDarkModeEnabled) async {
-                await _themeController.setThemeMode(isDarkModeEnabled);
+                await _themeController.changeThemeMode(isDarkModeEnabled);
               },
             ),
           ),

@@ -7,6 +7,8 @@ class QrItemCard extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    String date =
+        '${qrModel.date.split(',')[0].tr}, ${qrModel.date.split(',')[1]}';
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -44,7 +46,7 @@ class QrItemCard extends StatelessWidget {
             ),
           ),
           subtitle: Text(
-            qrModel.date,
+            date,
             style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w400,

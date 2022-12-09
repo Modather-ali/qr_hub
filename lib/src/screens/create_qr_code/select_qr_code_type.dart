@@ -30,9 +30,9 @@ class _SelectQrCodeTypeState extends State<SelectQrCodeType> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Create Qr Code',
-          style: TextStyle(color: Colors.black),
+        title: Text(
+          'Create Qr Code'.tr,
+          style: const TextStyle(color: Colors.black),
         ),
         centerTitle: true,
         elevation: 1,
@@ -41,7 +41,7 @@ class _SelectQrCodeTypeState extends State<SelectQrCodeType> {
         children: List.generate(
           _qrType.length,
           (index) => NiceListTile(
-            titleText: _qrType[index]['type'],
+            titleText: _qrType[index]['type'].toString().tr,
             iconData: _qrType[index]['icon'],
             onTap: () {
               Get.off(() => CreateQRCodePage(

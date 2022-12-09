@@ -32,7 +32,7 @@ class SuperTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: TextFormField(
-        onChanged: onChanged,
+        textDirection: TextDirection.ltr,
         controller: controller,
         validator: validator,
         scrollPadding: const EdgeInsets.all(50),

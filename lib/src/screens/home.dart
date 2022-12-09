@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onDismissed: (direction) async {
                   await _controller.deleteData(
                       _controller.qrModelsDataList[index].id, index);
-                  Get.snackbar("You have deleted",
+                  Get.snackbar("You have deleted".tr,
                       _controller.qrModelsDataList[index].url,
                       backgroundColor: Colors.red,
                       colorText: Colors.white,
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Get.to(() => const SelectQrCodeType());
               // Get.to(() => const CreateQrCodePage());
             },
-            tooltip: 'Create Qr Code',
+            tooltip: 'Create Qr Code'.tr,
             child: const Icon(Icons.add),
           ),
           FloatingActionButton(
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {
               Get.to(() => const ScannerPage());
             },
-            tooltip: 'Scan Qr Code',
+            tooltip: '',
             child: const Icon(Icons.qr_code_scanner_rounded),
           ),
         ],

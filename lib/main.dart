@@ -19,7 +19,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // final ThemeController _themeController = Get.put(ThemeController());
+  final ThemeController _themeController = Get.put(ThemeController());
   @override
   void initState() {
     // _themeController.readData();
@@ -33,6 +33,8 @@ class _MyAppState extends State<MyApp> {
       title: 'QrHub',
       theme: lightTheme,
       darkTheme: darkTheme,
+      locale: Locale(_themeController.local),
+      translations: AppLocale(),
       // themeMode: _themeController.themeMode == 'dark'
       //     ? ThemeMode.dark
       //     : ThemeMode.light,
