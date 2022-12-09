@@ -3,7 +3,12 @@ import 'package:qr_hub/packages.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await initService();
   runApp(const MyApp());
+}
+
+Future initService() async {
+  await Get.putAsync(() => ThemeController().init());
 }
 
 class MyApp extends StatefulWidget {
@@ -14,10 +19,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final ThemeController _themeController = Get.put(ThemeController());
+  // final ThemeController _themeController = Get.put(ThemeController());
   @override
   void initState() {
-    _themeController.readData();
+    // _themeController.readData();
     super.initState();
   }
 
@@ -28,14 +33,10 @@ class _MyAppState extends State<MyApp> {
       title: 'QrHub',
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: _themeController.themeMode == 'dark'
-          ? ThemeMode.dark
-          : ThemeMode.light,
-      home: GetBuilder<ThemeController>(
-          init: ThemeController(),
-          builder: (_) {
-            return const HomeScreen();
-          }),
+      // themeMode: _themeController.themeMode == 'dark'
+      //     ? ThemeMode.dark
+      //     : ThemeMode.light,
+      home: const HomeScreen(),
     );
   }
 }

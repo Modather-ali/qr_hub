@@ -173,15 +173,6 @@ class ViewQrCodeScreen extends StatelessWidget {
     );
   }
 
-  _editQRCode() {
-    switch (qrModel.urlType) {
-      case 'website':
-        Get.to(() => const CreateQRCodePage());
-        break;
-      default:
-    }
-  }
-
   _shareUrl() async {
     try {
       await _screenshotController

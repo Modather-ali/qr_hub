@@ -1,43 +1,27 @@
-import 'dart:developer';
-
 import '../../packages.dart';
 
-class ThemeController extends GetxController {
+class ThemeController extends GetxService {
+  late SharedPreferences _sharedPreferences;
   final SqlDatabase _sqlDatabase = SqlDatabase();
-  String themeMode = 'dark';
+  bool isDark = false;
   String local = 'en';
 
-  Future readData() async {
-    List<Map<String, Object?>> data;
-    QRModel qrModel;
-    data = await _sqlDatabase.readData('SELECT * FROM AppData');
-    if (data.isNotEmpty) {
-      for (var element in data) {
-        themeMode = element['theme_mode'].toString();
-        local = element['local'].toString();
-      }
-    } else {
-      await _sqlDatabase.insertData(
-          "INSERT INTO 'AppData' ('theme_mode', 'local') VALUES('$themeMode', '$local')");
-    }
-    log('theme $themeMode');
-    log('local $local');
-    update();
+  Future<ThemeController> init() async {
+    _sharedPreferences = await SharedPreferences.getInstance();
+    isDark = _sharedPreferences.getBool('theme_mode') ?? false;
+    local = _sharedPreferences.getString('local') ?? 'en';
+    await setThemeMode(isDark);
+
+    return this;
   }
 
-  Future updateDate({
-    required String newMode,
-    required String newLocale,
-  }) async {
-    await _sqlDatabase.updateData('''
-        UPDATE AppData SET 
-        theme_mode = "$newMode", 
-        local = "$newLocale"
-        ''');
-    themeMode = newMode;
-    local = newLocale;
-    log('new theme $themeMode');
-    log('new local $local');
-    update();
+  Future setThemeMode(bool isDarkMode) async {
+    if (isDarkMode) {
+      Get.changeTheme(darkTheme);
+    } else {
+      Get.changeTheme(lightTheme);
+    }
+    isDark = isDarkMode;
+    await _sharedPreferences.setBool('theme_mode', isDarkMode);
   }
 }

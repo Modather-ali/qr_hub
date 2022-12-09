@@ -3,30 +3,73 @@ import '../../packages.dart';
 class SideDrawer extends StatelessWidget {
   SideDrawer({Key? key}) : super(key: key);
   final ThemeController _themeController = Get.put(ThemeController());
+  final String _appStoreLink =
+      'https://play.google.com/store/apps/details?id=com.example.qr_hub';
+  final String _githubLink = 'https://github.com/Modather-ali/qr_hub';
+  _lunchUrl(String link) async {
+    Uri url = Uri.parse(link);
+    if (await canLaunchUrl(url)) {
+      await launchUrl(
+        url,
+        mode: LaunchMode.externalApplication,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       width: 220,
       child: ListView(
         children: [
+          Container(
+            height: 100,
+            margin: const EdgeInsets.symmetric(vertical: 20),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(appIcon),
+              ),
+            ),
+          ),
           NiceListTile(
-            onTap: () {
-              bool isDark = _themeController.themeMode == 'dark';
-              _themeController.updateDate(
-                newLocale: _themeController.local,
-                newMode: isDark ? 'light' : 'dark',
-              );
+            onTap: () async {
+              await Share.share(_appStoreLink);
             },
             titleText: 'Share the app',
             iconData: Icons.share,
+            showTrailing: false,
           ),
-          const NiceListTile(
+          NiceListTile(
+            onTap: () async {
+              _lunchUrl(_appStoreLink);
+            },
             titleText: 'Rate us',
             iconData: Icons.star_rate,
+            showTrailing: false,
           ),
-          // NiceListTile(titleText: '', iconData: Icons),
-          // NiceListTile(titleText: '', iconData: Icons),
-          // NiceListTile(titleText: '', iconData: Icons),
+          NiceListTile(
+            onTap: () async {
+              _lunchUrl(_githubLink);
+            },
+            titleText: 'Source Code',
+            iconData: Icons.code,
+            showTrailing: false,
+          ),
+          const NiceListTile(
+            titleText: 'عربي',
+            iconData: Icons.translate,
+            showTrailing: false,
+          ),
+          // NiceListTile(titleText: '', iconData: Icons, showTrailing: false,),
+
+          Center(
+            child: DayNightSwitcher(
+              isDarkModeEnabled: _themeController.isDark,
+              onStateChanged: (isDarkModeEnabled) async {
+                await _themeController.setThemeMode(isDarkModeEnabled);
+              },
+            ),
+          ),
         ],
       ),
     );
