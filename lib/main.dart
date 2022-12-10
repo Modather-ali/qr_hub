@@ -20,11 +20,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final ThemeController _themeController = Get.put(ThemeController());
-  @override
-  void initState() {
-    // _themeController.readData();
-    super.initState();
-  }
 
   // This widget is the root of your application.
   @override
@@ -35,9 +30,6 @@ class _MyAppState extends State<MyApp> {
       darkTheme: darkTheme,
       locale: Locale(_themeController.local),
       translations: AppLocale(),
-      // themeMode: _themeController.themeMode == 'dark'
-      //     ? ThemeMode.dark
-      //     : ThemeMode.light,
       home: const HomeScreen(),
     );
   }

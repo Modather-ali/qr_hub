@@ -6,6 +6,8 @@ class SideDrawer extends StatelessWidget {
   final String _appStoreLink =
       'https://play.google.com/store/apps/details?id=com.example.qr_hub';
   final String _githubLink = 'https://github.com/Modather-ali/qr_hub';
+  final String _devWhatsApp = 'https://wa.me/qr/BR5YRON4OGFLM1';
+
   _lunchUrl(String link) async {
     Uri url = Uri.parse(link);
     if (await canLaunchUrl(url)) {
@@ -68,8 +70,14 @@ class SideDrawer extends StatelessWidget {
             iconData: Icons.translate,
             showTrailing: false,
           ),
-          // NiceListTile(titleText: '', iconData: Icons, showTrailing: false,),
-
+          NiceListTile(
+            onTap: () async {
+              _lunchUrl(_devWhatsApp);
+            },
+            titleText: 'WhatsApp',
+            iconData: Icons.whatsapp,
+            showTrailing: false,
+          ),
           Center(
             child: DayNightSwitcher(
               isDarkModeEnabled: _themeController.isDark,

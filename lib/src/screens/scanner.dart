@@ -26,16 +26,18 @@ class _ScannerPageState extends State<ScannerPage> {
   //   }
   // }
 
-  void _onQRViewCreated(QRViewController controller) {
+  void _onQRViewCreated(QRViewController controller) async {
     this.controller = controller;
-    int counter = 0;
+    setState(() {});
+    await controller.resumeCamera();
+
     controller.scannedDataStream.listen((scanData) async {
       result = scanData;
-      counter = 1;
+
       log(result!.code!);
-      if (result != null && counter == 1) {
+      if (result != null) {
+        await controller.stopCamera();
         await _insertNewQR(result!.code!);
-        counter = 0;
       }
     });
   }
