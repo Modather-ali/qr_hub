@@ -23,6 +23,9 @@ class _CreateQRCodePageState extends State<CreateQRCodePage> {
 
   final FocusNode _focusNode = FocusNode();
 
+  final RegExp emailRegex = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+
   final Map<String, Map> _textFieldType = {
     'Website': {
       'field_label': 'https://example.com',
@@ -142,7 +145,7 @@ class _CreateQRCodePageState extends State<CreateQRCodePage> {
                 controller: _textEditingController,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field is required";
+                    return "This Field is required".tr;
                   }
 
                   return null;

@@ -208,13 +208,17 @@ class ViewQrCodeScreen extends StatelessWidget {
       PermissionStatus permissionStatus = await Permission.storage.request();
       if (permissionStatus.isGranted) {
         // String newPath = "storage/emulated/0/QrHub";
-        String fileName =
-            '${qrModel.urlType}_${qrModel.url.split('/').last}.png';
+        String fileName = '${qrModel.urlType}_${qrModel.url.split('/').last}';
 
         _screenshotController.capture().then((image) async {
           await ImageGallerySaver.saveImage(image!,
               name: fileName, quality: 100);
         });
+
+        Get.snackbar("Saved in Gallery".tr, '',
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15));
         log("save success $fileName");
       }
     } catch (e) {

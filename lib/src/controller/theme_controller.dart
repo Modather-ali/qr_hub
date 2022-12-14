@@ -9,11 +9,6 @@ class ThemeController extends GetxService {
     _sharedPreferences = await SharedPreferences.getInstance();
     isDark = _sharedPreferences.getBool('theme_mode') ?? false;
     local = _sharedPreferences.getString('local') ?? 'en';
-    if (isDark) {
-      Get.changeTheme(darkTheme);
-    } else {
-      Get.changeTheme(lightTheme);
-    }
     return this;
   }
 

@@ -24,7 +24,9 @@ class AppLocale implements Translations {
           'Thursday': 'Thursday',
           'Friday': 'Friday',
           'Saturday': 'Saturday',
-          'Sunday': 'Sunday'
+          'Sunday': 'Sunday',
+          'Saved in Gallery': 'Saved in Gallery',
+          'This Field is required': 'This Field is required',
         },
         "ar": {
           "You have deleted": 'قد قمت بحذف',
@@ -48,6 +50,8 @@ class AppLocale implements Translations {
           'Friday': 'الجمعة',
           'Saturday': 'السبت',
           'Sunday': 'الأحد',
+          'Saved in Gallery': 'تم الحفظ في الاستديو',
+          'This Field is required': 'هذا الحقل مطلوب',
         },
       };
 }

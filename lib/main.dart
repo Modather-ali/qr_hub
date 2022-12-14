@@ -11,15 +11,10 @@ Future initService() async {
   await Get.putAsync(() => ThemeController().init());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends GetView<ThemeController> {
   const MyApp({super.key});
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  final ThemeController _themeController = Get.put(ThemeController());
+  // final ThemeController _themeController = Get.put(ThemeController());
 
   // This widget is the root of your application.
   @override
@@ -28,7 +23,8 @@ class _MyAppState extends State<MyApp> {
       title: 'QrHub',
       theme: lightTheme,
       darkTheme: darkTheme,
-      locale: Locale(_themeController.local),
+      themeMode: controller.isDark ? ThemeMode.dark : ThemeMode.light,
+      locale: Locale(controller.local),
       translations: AppLocale(),
       home: const HomeScreen(),
     );
