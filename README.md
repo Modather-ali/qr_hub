@@ -7,7 +7,7 @@ A Flutter project.
 Open CMD where you want to clone the project & run the following commands
 
 ```
-git clone https://github.com/Modather-ali/bank_app_ui.git
+git clone https://github.com/Modather-ali/qr_hub.git
 cd bank_app_ui
 flutter pub get
 flutter run
